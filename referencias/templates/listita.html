@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Referencias y Pensamientos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="mb-3">
+        <a href="{% url 'crear_referencia' %}" class="btn btn-primary">Nueva Referencia</a>
+        <a href="{% url 'crear_pensamiento' %}" class="btn btn-primary">Nuevo pensamiento</a>
+    </div>
+
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Referencias</h2>
+        <a href="{% url 'crear_referencia' %}" class="btn btn-primary">Nueva Referencia</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Autor</th>
+                <th>Etiquetas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ref in referencias %}
+            <tr>
+                <td>{{ ref.nombre }}</td>
+                <td>{{ ref.autor }}</td>
+                <td>
+                    {% for etiqueta in ref.etiquetas.all %}
+                        <span class="badge bg-secondary">{{ etiqueta.nombre }}</span>
+                    {% empty %}
+                        Sin etiquetas
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'editar_referencia' ref.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_referencia' ref.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No hay referencias registradas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr class="my-4">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Pensamientos</h2>
+        <a href="{% url 'crear_pensamiento' %}" class="btn btn-primary">Nuevo Pensamiento</a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Autor</th>
+                <th>Etiquetas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in pensamientos %}
+            <tr>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.autor.username }}</td>
+                <td>
+                    {% for etiqueta in p.etiquetas.all %}
+                        <span class="badge bg-secondary">{{ etiqueta.nombre }}</span>
+                    {% empty %}
+                        Sin etiquetas
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'editar_pensamiento' p.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_pensamiento' p.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No hay pensamientos registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

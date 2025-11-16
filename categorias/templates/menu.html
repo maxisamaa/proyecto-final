@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Categorías{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Categorías</h1>
+
+    <!-- Tipo -->
+    <h3>Tipo</h3>
+    <div class="row mb-4">
+        {% for tipo in tipos %}
+        <div class="col-md-3 mb-3">
+            <div class="card text-white" 
+                 style="background-color: {% cycle '#ff6f61' '#6fa8dc' '#93c47d' '#ffb347' %};">
+                <div class="card-header">{{ tipo.nombre }}</div>
+                <div class="card-body p-2">
+                    {% if tipo.tarea_set.all %}
+                        <ul class="mb-0 ps-3">
+                            {% for tarea in tipo.tarea_set.all %}
+                                <li>{{ tarea.titulo }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>No hay tareas asociadas</em>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Proximidad -->
+    <h3>Proximidad</h3>
+    <div class="row mb-4">
+        {% for proximidad in proximidades %}
+        <div class="col-md-4 mb-3">
+            <div class="card text-white" 
+                 style="background-color: {% cycle '#28a745' '#71c671' '#c2f0c2' %}; color: black;">
+                <div class="card-header">{{ proximidad.valor|title }}</div>
+                <div class="card-body p-2">
+                    {% if proximidad.tarea_set.all %}
+                        <ul class="mb-0 ps-3">
+                            {% for tarea in proximidad.tarea_set.all %}
+                                <li>{{ tarea.titulo }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>No hay tareas asociadas</em>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Prioridad -->
+    <h3>Prioridad</h3>
+    <div class="row mb-4">
+        {% for prioridad in prioridades %}
+        <div class="col-md-3 mb-3">
+            <div class="card text-white" 
+                 style="background-color: {% cycle '#6a0dad' '#9b30ff' '#c78cff' '#e6ccff' %}; color: white;">
+                <div class="card-header">{{ prioridad.nivel|title }}</div>
+                <div class="card-body p-2">
+                    {% if prioridad.tarea_set.all %}
+                        <ul class="mb-0 ps-3">
+                            {% for tarea in prioridad.tarea_set.all %}
+                                <li>{{ tarea.titulo }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>No hay tareas asociadas</em>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

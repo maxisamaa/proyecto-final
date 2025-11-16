@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4 text-center">
+
+    <!-- Botones de orden -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-2">
+            <div class="card text-white mb-3" style="background-color: #6fa8dc; cursor:pointer;" onclick="window.location.href='?orden=tipo'">
+                <div class="card-body">
+                    Ordenar por Tipo
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white mb-3" style="background-color: #93c47d; cursor:pointer;" onclick="window.location.href='?orden=proximidad'">
+                <div class="card-body">
+                    Ordenar por Proximidad
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white mb-3" style="background-color: #ff6f61; cursor:pointer;" onclick="window.location.href='?orden=prioridad'">
+                <div class="card-body">
+                    Ordenar por Prioridad
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white mb-3" style="background-color: #ffa500; cursor:pointer;" onclick="window.location.href='?orden=tiempo'">
+                <div class="card-body">
+                    Ordenar por Tiempo Restante
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de tareas -->
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Título</th>
+                <th>Tipo</th>
+                <th>Proximidad</th>
+                <th>Prioridad</th>
+                <th>Tiempo restante</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for tarea in tareas %}
+            <tr>
+                <td>{{ tarea.titulo }}</td>
+                <!-- Tipo -->
+                <td
+                    {% if tarea.tipo.color == "rojo" %}
+                        style="background-color: #ff4d4d; color: white;"
+                    {% elif tarea.tipo.color == "azul" %}
+                        style="background-color: #4da6ff; color: white;"
+                    {% elif tarea.tipo.color == "verde" %}
+                        style="background-color: #5cd65c; color: black;"
+                    {% elif tarea.tipo.color == "amarillo" %}
+                        style="background-color: #ffff66; color: black;"
+                    {% endif %}
+                >
+                    {{ tarea.tipo.nombre }}
+                </td>
+
+                <!-- Proximidad -->
+                <td
+                    {% if tarea.proximidad.valor == "corto" %}
+                        style="background-color: #28a745; color: white;"
+                    {% elif tarea.proximidad.valor == "mediano" %}
+                        style="background-color: #71c671; color: black;"
+                    {% elif tarea.proximidad.valor == "largo" %}
+                        style="background-color: #c2f0c2; color: black;"
+                    {% endif %}
+                >
+                    {{ tarea.proximidad.get_valor_display }}
+                </td>
+
+                <!-- Prioridad -->
+                <td
+                    {% if tarea.prioridad.nivel == "muy alta" %}
+                        style="background-color: #6a0dad; color: white;"
+                    {% elif tarea.prioridad.nivel == "alta" %}
+                        style="background-color: #9b30ff; color: white;"
+                    {% elif tarea.prioridad.nivel == "media" %}
+                        style="background-color: #c78cff; color: black;"
+                    {% elif tarea.prioridad.nivel == "baja" %}
+                        style="background-color: #e6ccff; color: black;"
+                    {% endif %}
+                >
+                    {{ tarea.prioridad.get_nivel_display }}
+                </td>
+
+                <!-- Tiempo restante -->
+                <td
+                    {% with tarea.tiempo_restante as tr %}
+                        {% if tr %}
+                            {% if tr.dias < 1 %}
+                                style="background-color: #ff0000; color: white;"
+                            {% elif tr.dias < 3 %}
+                                style="background-color: #ff4d4d; color: white;"
+                            {% elif tr.dias < 5 %}
+                                style="background-color: #fd7a7a; color: black;"
+                            {% else %}
+                                style="background-color: #f3adad; color: black;"
+                            {% endif %}
+                        {% endif %}
+                    {% endwith %}
+                >
+                    {% with tarea.tiempo_restante as tr %}
+                        {% if tr %}
+                            {{ tr.dias }} días, {{ tr.horas }} horas
+                        {% else %}
+                            Tiempo vencido
+                        {% endif %}
+                    {% endwith %}
+                </td>
+
+                <td>
+                    <a href="{% url 'editar_tarea' tarea.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_tarea' tarea.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No tienes tareas registradas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

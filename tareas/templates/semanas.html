@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1>Mi vida en semanas</h1>
+    <div class="d-flex flex-wrap" style="width: 780px;">
+        {% for semana in semanas %}
+            <div style="
+                width: 10px; 
+                height: 10px; 
+                margin: 1px; 
+                background-color: {% if semana.vivida %}#007bff{% else %}#ffffff{% endif %};
+                border: 1px solid #ccc;
+                " title="Semana {{ semana.numero }}">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

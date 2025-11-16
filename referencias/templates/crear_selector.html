@@ -1,0 +1,32 @@
+<select id="tipo_form">
+    <option value="referencia">Referencia</option>
+    <option value="pensamiento">Pensamiento</option>
+</select>
+
+<form id="referencia_form" method="post" style="display:block;">
+    {% csrf_token %}
+    {{ referencia_form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+
+<form id="pensamiento_form" method="post" style="display:none;">
+    {% csrf_token %}
+    {{ pensamiento_form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+
+<script>
+    const select = document.getElementById('tipo_form');
+    const refForm = document.getElementById('referencia_form');
+    const penForm = document.getElementById('pensamiento_form');
+
+    select.addEventListener('change', () => {
+        if(select.value === 'referencia'){
+            refForm.style.display = 'block';
+            penForm.style.display = 'none';
+        } else {
+            refForm.style.display = 'none';
+            penForm.style.display = 'block';
+        }
+    });
+</script>

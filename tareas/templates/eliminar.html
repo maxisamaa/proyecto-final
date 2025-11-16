@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            Eliminar tarea
+        </div>
+
+        <div class="card-body">
+            <p>¿Deseas eliminar la tarea <strong>{{ object.titulo }}</strong>?</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">Eliminar</button>
+                <a href="{% url 'lista_tareas' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
