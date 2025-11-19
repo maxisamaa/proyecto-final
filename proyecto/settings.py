@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'categorias',
     'referencias',
     'usuarios',
-    'categorias.apps.CategoriasConfig', 
     
 ]
 
