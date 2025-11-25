@@ -9,10 +9,8 @@
         <a href="{% url 'crear_pensamiento' %}" class="btn btn-primary">Nuevo pensamiento</a>
     </div>
 
-    <div class="d-flex justify-content-between mb-3">
-        <h2>Referencias</h2>
-        <a href="{% url 'crear_referencia' %}" class="btn btn-primary">Nueva Referencia</a>
-    </div>
+    <!-- Referencias -->
+    <h2 class="mb-3">Referencias</h2>
     <table class="table table-bordered table-hover">
         <thead class="table-light">
             <tr>
@@ -26,7 +24,7 @@
             {% for ref in referencias %}
             <tr>
                 <td>{{ ref.nombre }}</td>
-                <td>{{ ref.autor }}</td>
+                <td>{{ ref.usuario.username }}</td>
                 <td>
                     {% for etiqueta in ref.etiquetas.all %}
                         <span class="badge bg-secondary">{{ etiqueta.nombre }}</span>
@@ -35,6 +33,7 @@
                     {% endfor %}
                 </td>
                 <td>
+                    <a href="{% url 'ver_referencia' ref.id %}" class="btn btn-success btn-sm">Ver</a>
                     <a href="{% url 'editar_referencia' ref.id %}" class="btn btn-warning btn-sm">Editar</a>
                     <a href="{% url 'eliminar_referencia' ref.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>
@@ -49,10 +48,8 @@
 
     <hr class="my-4">
 
-    <div class="d-flex justify-content-between mb-3">
-        <h2>Pensamientos</h2>
-        <a href="{% url 'crear_pensamiento' %}" class="btn btn-primary">Nuevo Pensamiento</a>
-    </div>
+    <!-- Pensamientos -->
+    <h2 class="mb-3">Pensamientos</h2>
     <table class="table table-bordered table-hover">
         <thead class="table-light">
             <tr>
@@ -66,7 +63,7 @@
             {% for p in pensamientos %}
             <tr>
                 <td>{{ p.nombre }}</td>
-                <td>{{ p.autor.username }}</td>
+                <td>{{ p.usuario.username }}</td>
                 <td>
                     {% for etiqueta in p.etiquetas.all %}
                         <span class="badge bg-secondary">{{ etiqueta.nombre }}</span>
@@ -75,6 +72,7 @@
                     {% endfor %}
                 </td>
                 <td>
+                    <a href="{% url 'ver_pensamiento' p.id %}" class="btn btn-success btn-sm">Ver</a>
                     <a href="{% url 'editar_pensamiento' p.id %}" class="btn btn-warning btn-sm">Editar</a>
                     <a href="{% url 'eliminar_pensamiento' p.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>

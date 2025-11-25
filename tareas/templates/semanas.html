@@ -1,18 +1,149 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-    <h1>Mi vida en semanas</h1>
-    <div class="d-flex flex-wrap" style="width: 780px;">
-        {% for semana in semanas %}
-            <div style="
-                width: 10px; 
-                height: 10px; 
-                margin: 1px; 
-                background-color: {% if semana.vivida %}#007bff{% else %}#ffffff{% endif %};
-                border: 1px solid #ccc;
-                " title="Semana {{ semana.numero }}">
+
+<style>
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.titulo {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.form-nacimiento {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.form-nacimiento input[type="date"] {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-nacimiento button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.form-nacimiento button:hover {
+    background: #0056b3;
+}
+
+.grilla-container {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.eje-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 5px;
+}
+
+.eje-vertical span {
+    height: 14px; /* igual a la altura de un cuadro */
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.eje-horizontal {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.eje-horizontal span {
+    width: 14px; /* igual al ancho de un cuadro */
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.grilla {
+    display: flex;
+    flex-direction: column;
+}
+
+.fila {
+    display: flex;
+}
+
+.cuadro {
+    width: 14px;
+    height: 14px;
+    margin: 1px;
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.cuadro.vivida {
+    background: #007bff;
+}
+
+.etiqueta-anios {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-weight: bold;
+    margin-right: 5px;
+}
+</style>
+
+<div class="container">
+    <h1 class="titulo">Mi vida en semanas</h1>
+
+    {% if not request.user.perfil.fecha_nacimiento and not grilla %}
+        <form method="POST" class="form-nacimiento">
+            {% csrf_token %}
+            <label>Ingresa tu fecha de nacimiento:</label>
+            <input type="date" name="fecha_nacimiento" required>
+            <button type="submit">Generar grilla</button>
+        </form>
+    {% endif %}
+
+    {% if grilla %}
+    <div class="grilla-container">
+        <!-- Etiqueta vertical "Años" -->
+        <div class="etiqueta-anios">AÑOS</div>
+
+        <div>
+            
+            <!-- Grilla con años en filas -->
+            <div class="grilla">
+                {% for fila in grilla %}
+                    <div class="fila">
+                        <!-- Número de año -->
+                        <div class="eje-vertical">
+                            <span>{{ forloop.counter }}</span>
+                        </div>
+                        <!-- Semanas de esa fila -->
+                        {% for semana in fila %}
+                            <div class="cuadro {% if semana.vivida %}vivida{% endif %}"></div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
+    {% endif %}
 </div>
+
 {% endblock %}

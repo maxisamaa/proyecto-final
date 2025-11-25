@@ -1,0 +1,60 @@
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .titulo {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .form-nacimiento {
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .form-nacimiento input[type="date"] {
+        padding: 8px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-nacimiento button {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .form-nacimiento button:hover {
+        background: #0056b3;
+    }
+
+    .grilla {
+        display: flex;
+        flex-wrap: wrap;
+        width: 780px;
+        margin: 0 auto;
+    }
+
+    .cuadro {
+        width: 10px;
+        height: 10px;
+        margin: 1px;
+        background: white;
+        border: 1px solid #ccc;
+    }
+
+    .cuadro.vivida {
+        background: #007bff;
+    }

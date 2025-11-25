@@ -10,6 +10,7 @@ def index(request):
     return render(request, 'index.html')
 
 class ListaTareas(LoginRequiredMixin, ListView):
+    login_url = '/login/'
     model = Tarea
     template_name = 'lista.html'
     context_object_name = 'tareas'
@@ -72,21 +73,52 @@ class DetalleTarea(LoginRequiredMixin, DetailView):
 ######### grilla
 
 from django.shortcuts import render
+from datetime import date, timedelta,datetime
+from django.contrib.auth.decorators import login_required
+
+
+
+from django.shortcuts import render
 from datetime import date, timedelta
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login/')
 def vida_en_semanas(request):
-    # Reemplaza con tu fecha de nacimiento
-    fecha_nacimiento = date(1995, 7, 26)  
+    perfil = request.user.perfil
+
+    # Si el usuario envía una fecha nueva → guardarla
+    if request.method == "POST":
+        fecha_str = request.POST.get("fecha_nacimiento")
+        if fecha_str:
+            perfil.fecha_nacimiento = date.fromisoformat(fecha_str)
+            perfil.save()
+
+    # Si NO tiene fecha → mostrar solo formulario
+    if not perfil.fecha_nacimiento:
+        return render(request, 'semanas.html')
+
+    # Si SÍ tiene fecha → generar grilla
+    fecha_nacimiento = perfil.fecha_nacimiento
     fecha_actual = date.today()
-    semanas_totales = 100 * 52  # 100 años x 52 semanas aprox
+    total_anios = 100  # años que quieres mostrar
+    semanas_por_ano = 52
 
-    semanas = []
-    for semana_num in range(semanas_totales):
-        inicio_semana = fecha_nacimiento + timedelta(weeks=semana_num)
-        vivida = inicio_semana <= fecha_actual
-        semanas.append({
-            'numero': semana_num,
-            'vivida': vivida
-        })
+    # Crear grilla: lista de listas (cada fila = un año con 52 semanas)
+    grilla = []
+    for anio in range(total_anios):
+        fila = []
+        for semana in range(semanas_por_ano):
+            numero_semana = anio * semanas_por_ano + semana
+            inicio_semana = fecha_nacimiento + timedelta(weeks=numero_semana)
+            vivida = inicio_semana <= fecha_actual
+            fila.append({'numero': numero_semana+1, 'vivida': vivida})
+        grilla.append(fila)
 
-    return render(request, 'semanas.html', {'semanas': semanas})
+    context = {
+        'grilla': grilla,
+        'total_anios': total_anios,
+        'semanas_por_ano': semanas_por_ano,
+    }
+
+    return render(request, 'semanas.html', context)
+

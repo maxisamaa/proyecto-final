@@ -1,0 +1,38 @@
+.container {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.titulo {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.form-nacimiento {
+    margin-bottom: 20px;
+}
+
+.form-nacimiento input,
+.form-nacimiento button {
+    padding: 8px 12px;
+    font-size: 1rem;
+}
+
+.grilla {
+    display: flex;
+    flex-wrap: wrap;
+    width: 780px;
+    margin: 0 auto;
+}
+
+.cuadro {
+    width: 10px;
+    height: 10px;
+    margin: 1px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+}
+
+.cuadro.vivida {
+    background-color: #007bff; /* Azul Bootstrap */
+}

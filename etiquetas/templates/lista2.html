@@ -15,20 +15,22 @@
             </tr>
         </thead>
         <tbody>
-            {% for etiqueta in etiquetas %}
+            {% for etiqueta, tareas in etiquetas_con_tareas %} <!-- desempaqueto las tuplas -->
             <tr>
                 <td>{{ etiqueta.nombre }}</td>
+
                 <td>
-                    {% if etiqueta.tarea_set.all %}
+                    {% if tareas %} <!-- da true si hay al menos una tarea en esta lista-->
                         <ul class="mb-0">
-                        {% for tarea in etiqueta.tarea_set.all %}
-                            <li>{{ tarea.titulo }}</li>
+                        {% for tarea in tareas %}
+                             <li>{{ tarea.titulo }}</li>
                         {% endfor %}
                         </ul>
                     {% else %}
                         <em>No hay tareas asociadas</em>
                     {% endif %}
                 </td>
+
                 <td>
                     <a href="{% url 'editar_etiqueta' etiqueta.pk %}" class="btn btn-warning btn-sm">Editar</a>
                     <a href="{% url 'eliminar_etiqueta' etiqueta.pk %}" class="btn btn-danger btn-sm">Eliminar</a>

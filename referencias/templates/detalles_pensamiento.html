@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Detalle Referencia{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ pensamiento.nombre }}</h2>
+    <p><strong>Autor:</strong> {{ pensamiento.usuario.username }}</p>
+    <p><strong>Etiquetas:</strong>
+        {% for etiqueta in pensamiento.etiquetas.all %}
+            <span class="badge bg-secondary">{{ etiqueta.nombre }}</span>
+        {% empty %}
+            Sin etiquetas
+        {% endfor %}
+    </p>
+    <p><strong>Descripción:</strong> {{ pensamiento.descripcion }}</p>
+    <a href="{% url 'lista_referencias' %}" class="btn btn-danger">Volver</a>
+</div>
+{% endblock %}
