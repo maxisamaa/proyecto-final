@@ -1,1 +1,0 @@
-me falta que solo los usuarios puedan ver sus cosas , para ello cada etiqueta , categoria , referencia y pensamoiento debe tener marcada en su creacion por un user, luego mixinclass lo filtra automaticamente , pero en vistas con funciones es necesario fultrar por perfil . 
