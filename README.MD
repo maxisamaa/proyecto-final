@@ -16,6 +16,11 @@ Puedes acceder a la aplicación directamente desde la siguiente URL:
 
 **<https://proyecto-final-t9g6.onrender.com/>**
 
+Ademas posee un usuario operativo 
+usuario:maxi
+contrasena:pass123456
+te invito a registrarte si quieres tu propia cuenta!
+
 ## Licencia
 
 Este proyecto puede incluir una licencia según corresponda (MIT, Apache 2.0, GPL, etc.). Puedes agregarla aquí si decides incorporarla.
