@@ -5,7 +5,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserCreationForm(request.POST) # sino tendria que hacer el form como form.py o escribirlo derechamente en el template con etiquetas
         if form.is_valid():
             form.save()
             return redirect('login')
@@ -15,10 +15,12 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = AuthenticationForm(request, data=request.POST) # sino tendria que hacer el form como form.py o escribirlo derechamente en el template con etiquetas
         if form.is_valid():
             auth_login(request, form.get_user())
             return redirect('index')
+        else:
+            return render(request, 'login1.html', {'form': form})
     else:
         form = AuthenticationForm()
     return render(request, 'login1.html', {'form': form})

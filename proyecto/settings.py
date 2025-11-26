@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z1jm+m)02!*uj4*=#x&6y*su_x3-$-!@j9go7719g9r$*)(i5r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =True# cambiar esto a True si quiero cambiar algo del proyecto
+DEBUG =False# cambiar esto a True si quiero cambiar algo del proyecto
 
-# ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = ['.onrender.com']
 
 
 # Application definition
@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 #Database
 #https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'proyectofinal1',
-        'USER': 'root',
-        'PASSWORD':'root',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME':'proyectofinal1',
+#         'USER': 'root',
+#         'PASSWORD':'root',
+#         'HOST':'localhost',
+#         'PORT':'3306',
+#     }
+# }
 
-# DATABASES={
-#     'default': dj_database_url.config(
-#         default=os.environ.get('DATABASE_URL'),
-#         conn_max_age=600
-#     )
-#  }
+DATABASES={
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
+ }
 
 
 # Password validation
